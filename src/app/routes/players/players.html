@@ -1,0 +1,35 @@
+<p-inputgroup class="max-w-xl">
+  <input #userid pInputText placeholder="userId" />
+  <button (click)="unban(userid.value)" pButton>Unban</button>
+</p-inputgroup>
+<p-table [(contextMenuSelection)]="player" [value]="players()" [contextMenu]="cm">
+  <ng-template #header>
+    <tr>
+      <th>Account Name</th>
+      <th>Building Count</th>
+      <th>IP</th>
+      <th>Level</th>
+      <th>Location x</th>
+      <th>Location y</th>
+      <th>Name</th>
+      <th>Ping</th>
+      <th>Player Id</th>
+      <th>User Id</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-player>
+    <tr [pContextMenuRow]="player">
+      <td>{{ player.accountName }}</td>
+      <td>{{ player.building_count }}</td>
+      <td>{{ player.ip }}</td>
+      <td>{{ player.level }}</td>
+      <td>{{ player.location_x }}</td>
+      <td>{{ player.location_y }}</td>
+      <td>{{ player.name }}</td>
+      <td>{{ player.ping }}</td>
+      <td>{{ player.playerId }}</td>
+      <td>{{ player.userId }}</td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-contextmenu #cm [model]="menu" (onHide)="player = undefined" />

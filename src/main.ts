@@ -1,6 +1,31 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter } from '@angular/router';
+import { definePreset, palette } from '@primeuix/themes';
+import Aura from '@primeuix/themes/aura';
+import { MessageService } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
+import { App, routes } from './app/app';
+import { authInterceptor } from './app/auth-interceptor';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(App, {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+    provideZonelessChangeDetection(),
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: definePreset(Aura, {
+          semantic: {
+            primary: palette('{cyan}'),
+          },
+        }),
+      },
+    }),
+    MessageService,
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
+}).catch(err => console.error(err));
