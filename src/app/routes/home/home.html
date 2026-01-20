@@ -1,11 +1,11 @@
 <div class="flex gap-2">
-  <p-inputgroup class="max-w-xl">
-    <textarea #announcemessage pInputText rows="1"></textarea>
+  <p-inputgroup class="w-auto!">
+    <textarea class="w-xs! grow-0!" #announcemessage pInputText rows="1" placeholder="Message"></textarea>
     <button (click)="announce(announcemessage.value)" pButton>Announce</button>
   </p-inputgroup>
   <button (click)="save()" pButton>Save</button>
-  <p-inputgroup class="max-w-2xl">
-    <input #shutdownmessage pInputText placeholder="Message" />
+  <p-inputgroup class="w-auto!">
+    <textarea class="w-xs! grow-0!" #shutdownmessage pInputText rows="1" placeholder="Message"></textarea>
     <p-inputnumber #waittime placeholder="Wait time (s)" />
     <button (click)="shutdown(waittime.value || 1, shutdownmessage.value)" pButton>Shutdown</button>
   </p-inputgroup>
