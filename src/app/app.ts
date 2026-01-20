@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'config',
     component: Config,
-    title: 'Settings',
+    title: 'API Settings',
   },
 ];
 
