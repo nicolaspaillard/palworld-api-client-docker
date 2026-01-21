@@ -2,9 +2,9 @@ services:
   client:
     image: nicolaspaillard/palworld-api-client-docker:latest
     environment:
-      PORT: 8080
-      API_HOST: palworld
-      API_PORT: 8212
-      API_PASSWORD: palworld
+      PORT: 8080 # defaults to "8080"
+      API_HOST: palworld # defaults to "palworld"
+      API_PORT: 8212 # defaults to "8212"
+      API_PASSWORD: palworld # defaults to "palworld"
     ports:
       - 8080:8080
