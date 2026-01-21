@@ -6,7 +6,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const apiService = inject(ApiService);
   return next(
     req.clone({
-      headers: req.headers.set('Authorization', 'Basic ' + btoa(`${apiService.apiConfig.username}:${apiService.apiConfig.password}`)),
+      headers: req.headers.set('Authorization', 'Basic ' + btoa(`admin:${apiService.apiConfig.password}`)).set('Content-Type', 'text/plain'),
     }),
   );
 };

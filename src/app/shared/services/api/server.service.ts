@@ -17,15 +17,15 @@ export class ServerService {
     private http: HttpClient,
     private apiService: ApiService,
   ) {
-    this.http.get(this.apiService.baseURL + '/info').subscribe({
+    this.http.get('/api/info').subscribe({
       next: infos => this._infos.next(infos as Infos),
       error: err => console.error(err),
     });
-    this.http.get(this.apiService.baseURL + '/settings').subscribe({
+    this.http.get('/api/settings').subscribe({
       next: settings => this._settings.next(settings as Settings),
       error: err => console.error(err),
     });
-    this.http.get(this.apiService.baseURL + '/metrics').subscribe({
+    this.http.get('/api/metrics').subscribe({
       next: metrics => this._metrics.next(metrics as Metrics),
       error: err => console.error(err),
     });
@@ -39,8 +39,8 @@ export class ServerService {
   public get settings(): Observable<Settings> {
     return this._settings.asObservable();
   }
-  announce = (message: string) => this.http.post(this.apiService.baseURL + '/announce', { message: message });
-  save = () => this.http.post(this.apiService.baseURL + '/save', {});
-  shutdown = (waittime: number, message: string) => this.http.post(this.apiService.baseURL + '/shutdown', { waittime: waittime, message: message });
-  stop = () => this.http.post(this.apiService.baseURL + '/stop', {});
+  announce = (message: string) => this.http.post('/api/announce', { message: message });
+  save = () => this.http.post('/api/save', {});
+  shutdown = (waittime: number, message: string) => this.http.post('/api/shutdown', { waittime: waittime, message: message });
+  stop = () => this.http.post('/api/stop', {});
 }

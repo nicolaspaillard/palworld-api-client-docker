@@ -13,7 +13,7 @@ export class PlayerService {
     private http: HttpClient,
     private apiService: ApiService,
   ) {
-    this.http.get(this.apiService.baseURL + '/players').subscribe({
+    this.http.get('/api/players').subscribe({
       next: list => this._playerList.next(list as PlayerList),
       error: err => console.error(err),
     });
@@ -21,7 +21,7 @@ export class PlayerService {
   public get playerList(): Observable<PlayerList> {
     return this._playerList.asObservable();
   }
-  ban = (userid: string, message: string) => this.http.post(this.apiService.baseURL + '/ban', { userid: userid, message: message });
-  kick = (userid: string, message: string) => this.http.post(this.apiService.baseURL + '/kick', { userid: userid, message: message });
-  unban = (userid: string) => this.http.post(this.apiService.baseURL + '/unban', { userid: userid });
+  ban = (userid: string, message: string) => this.http.post('/api/ban', { userid: userid, message: message });
+  kick = (userid: string, message: string) => this.http.post('/api/kick', { userid: userid, message: message });
+  unban = (userid: string) => this.http.post('/api/unban', { userid: userid });
 }

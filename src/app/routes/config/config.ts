@@ -13,7 +13,7 @@ import { ToastService } from '../../shared/services/toast.service';
   styles: ``,
 })
 export class Config {
-  config: ApiConfig = { ip: '', port: '', username: '', password: '' };
+  config: ApiConfig = { ip: '', port: '', password: '' };
   constructor(
     private apiService: ApiService,
     private toastService: ToastService,

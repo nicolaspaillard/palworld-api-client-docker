@@ -43,7 +43,6 @@ export class Players implements OnInit {
       { label: 'Ban', icon: 'pi pi-fw pi-times', command: () => this.ban(this.player!.userId) },
     ];
   }
-
   unban = (userid: string) => {
     this.playerService.unban(userid).subscribe({
       next: res => this.toastService.success('Success', 'The player was unbanned.'),
