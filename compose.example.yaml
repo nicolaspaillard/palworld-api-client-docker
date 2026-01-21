@@ -1,0 +1,11 @@
+services:
+  client:
+    build:
+      context: .
+    environment:
+      API_HOST: palworld
+      API_PORT: 8212
+      API_PASSWORD: <api password>
+      PORT: 8080
+    ports:
+      - 8080:8080
