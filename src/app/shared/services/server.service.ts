@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Infos } from '@classes/infos';
+import { Metrics } from '@classes/metrics';
+import { Settings } from '@classes/settings';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { Infos } from '../../classes/infos';
-import { Metrics } from '../../classes/metrics';
-import { Settings } from '../../classes/settings';
-import { ApiService } from '../api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +12,7 @@ export class ServerService {
   private _infos: Subject<Infos> = new ReplaySubject(1);
   private _metrics: Subject<Metrics> = new ReplaySubject(1);
   private _settings: Subject<Settings> = new ReplaySubject(1);
-  constructor(
-    private http: HttpClient,
-    private apiService: ApiService,
-  ) {
+  constructor(private http: HttpClient) {
     this.http.get('/api/info').subscribe({
       next: infos => this._infos.next(infos as Infos),
       error: err => console.error(err),

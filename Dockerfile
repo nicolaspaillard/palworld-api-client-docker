@@ -7,7 +7,7 @@ ARG NGINX_VERSION=alpine3.22
 # Stage 1: Build the Angular Application
 # =========================================
 
-FROM node:${NODE_VERSION} as builder
+FROM node:${NODE_VERSION} AS builder
 
 WORKDIR /app
 
@@ -25,14 +25,12 @@ RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:${NGINX_VERSION} AS runner
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf.template
+
+COPY start.sh /
 
 COPY --chown=nginx:nginx --from=builder /app/dist/*/browser /usr/share/nginx/html
 
 USER nginx
 
-EXPOSE 8080
-
-ENTRYPOINT ["nginx", "-c", "/etc/nginx/nginx.conf"]
-
-CMD ["-g", "daemon off;"]
+CMD ["/start.sh"]

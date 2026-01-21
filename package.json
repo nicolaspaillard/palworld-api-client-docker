@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "ng build",
+    "docker compose": "docker compose -f compose.dev.yaml up -d --build",
+    "docker update": "docker build -t nicolaspaillard/palworld-api-client-docker . && docker push nicolaspaillard/palworld-api-client-docker",
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",

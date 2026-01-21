@@ -1,15 +1,13 @@
 import { Component, signal, WritableSignal } from '@angular/core';
+import { Infos } from '@classes/infos';
 import { provideIcons } from '@ng-icons/core';
+import { ServerService } from '@services/server.service';
+import { ToastService } from '@services/toast.service';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
-import { Infos } from '../../shared/classes/infos';
-import { Metrics } from '../../shared/classes/metrics';
-import { Settings } from '../../shared/classes/settings';
-import { ServerService } from '../../shared/services/api/server.service';
-import { ToastService } from '../../shared/services/toast.service';
 
 class Setting {
   name: string;
@@ -35,13 +33,13 @@ export class Home {
       this.infos.set([infos]);
     });
     this.serverService.settings.subscribe(settings => {
-      let set: Setting[] = [];
-      for (const [key, value] of Object.entries(settings as Settings)) set.push({ name: key, value: value });
+      let set: { name: string; value: string }[] = [];
+      for (const [key, value] of Object.entries(settings)) set.push({ name: key, value: value });
       this.settings.set(set);
     });
     this.serverService.metrics.subscribe(metrics => {
-      let set: Setting[] = [];
-      for (const [key, value] of Object.entries(metrics as Metrics)) set.push({ name: key, value: value });
+      let set: { name: string; value: string }[] = [];
+      for (const [key, value] of Object.entries(metrics)) set.push({ name: key, value: value });
       this.metrics.set(set);
     });
   }

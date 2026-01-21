@@ -15,7 +15,13 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "baseUrl": "./",
+    "paths": {
+      "@services/*": ["src/app/shared/services/*"],
+      "@routes/*": ["src/app/routes/*"],
+      "@classes/*": ["src/app/shared/classes/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

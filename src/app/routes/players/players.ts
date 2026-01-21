@@ -1,13 +1,13 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Player } from '@classes/player';
+import { PlayerService } from '@services/player.service';
+import { ToastService } from '@services/toast.service';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
-import { Player } from '../../shared/classes/player';
-import { PlayerService } from '../../shared/services/api/player.service';
-import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-player-list',
@@ -23,7 +23,7 @@ export class Players implements OnInit {
     private playerService: PlayerService,
     private toastService: ToastService,
   ) {
-    this.playerService.playerList.subscribe(playerList => this.players.set(playerList.players));
+    this.playerService.playerList.subscribe(players => this.players.set(players));
   }
   ban = (userid: string, message: string = '') => {
     this.playerService.ban(userid, message).subscribe({
