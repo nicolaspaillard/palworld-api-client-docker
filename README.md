@@ -62,21 +62,6 @@ services:
 - `API_PASSWORD` - API authentication password (default: `palworld`)
 - `PORT` - Client port (default: `8080`)
 
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── routes/
-│   │   ├── home/       # Server dashboard
-│   │   └── players/    # Players list
-│   └── shared/
-│       ├── classes/    # Data models
-│       └── services/   # API services
-├── main.ts
-└── styles.css
-```
-
 ## Tech Stack
 
 - **Frontend**: Angular 21, TypeScript
