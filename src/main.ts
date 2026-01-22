@@ -9,7 +9,7 @@ import { initializeApp } from '@services/config.service';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { App, routes } from './app/app';
-import { authInterceptor } from './app/auth-interceptor';
+import { authInterceptor } from './app/shared/helpers/auth-interceptor';
 
 bootstrapApplication(App, {
   providers: [

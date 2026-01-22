@@ -3,17 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "ng build",
-    "docker compose": "docker compose -f compose.dev.yaml up -d --build",
-    "docker update": "docker build -t nicolaspaillard/palworld-api-client-docker . && docker push nicolaspaillard/palworld-api-client-docker",
     "ng": "ng",
+    "build": "ng build",
     "start": "ng serve",
     "test": "ng test",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "docker compose": "docker compose -f compose.dev.yaml up -d --build",
+    "docker update": "docker build -t nicolaspaillard/palworld-api-client-docker . && docker push nicolaspaillard/palworld-api-client-docker"
   },
   "prettier": {
     "printWidth": 100,
-    "singleQuote": true,
+    "singleQuote": false,
     "overrides": [
       {
         "files": "*.html",
@@ -34,6 +34,7 @@
     "@ng-icons/core": "^33.0.0",
     "@ng-icons/heroicons": "^33.0.0",
     "@primeuix/themes": "^2.0.3",
+    "primeicons": "^7.0.0",
     "primeng": "^21.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -48,7 +49,6 @@
     "prettier": "^3.8.0",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-packagejson": "^3.0.0",
     "prettier-plugin-sort-members": "^0.2.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.12",

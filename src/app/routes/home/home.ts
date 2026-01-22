@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { Infos } from '@classes/infos';
 import { provideIcons } from '@ng-icons/core';
 import { ServerService } from '@services/server.service';
@@ -21,27 +21,23 @@ class Setting {
   templateUrl: './home.html',
   styles: ``,
 })
-export class Home {
+export class Home implements OnDestroy {
   infos: WritableSignal<Infos[]> = signal([]);
+  interval: number;
   metrics: WritableSignal<Setting[]> = signal([]);
   settings: WritableSignal<Setting[]> = signal([]);
   constructor(
     private toastService: ToastService,
     private serverService: ServerService,
   ) {
-    this.serverService.infos.subscribe(infos => {
-      this.infos.set([infos]);
-    });
+    this.serverService.infos.subscribe(infos => this.infos.set([infos]));
     this.serverService.settings.subscribe(settings => {
       let set: { name: string; value: string }[] = [];
       for (const [key, value] of Object.entries(settings)) set.push({ name: key, value: value });
       this.settings.set(set);
     });
-    this.serverService.metrics.subscribe(metrics => {
-      let set: { name: string; value: string }[] = [];
-      for (const [key, value] of Object.entries(metrics)) set.push({ name: key, value: value });
-      this.metrics.set(set);
-    });
+    this.get();
+    this.interval = setInterval(() => this.get(), 5000);
   }
   announce = (message: string) =>
     this.serverService.announce(message).subscribe({
@@ -49,6 +45,16 @@ export class Home {
       error: err => this.toastService.error('Error', err),
     });
 
+  get = () =>
+    this.serverService.get().subscribe(metrics => {
+      console.log(metrics);
+      let set: { name: string; value: string }[] = [];
+      for (const [key, value] of Object.entries(metrics)) set.push({ name: key, value: value });
+      this.metrics.set(set);
+    });
+  ngOnDestroy() {
+    if (this.interval) clearInterval(this.interval);
+  }
   save = () =>
     this.serverService.save().subscribe({
       next: res => this.toastService.success('Success', 'Successfully saved the world.'),

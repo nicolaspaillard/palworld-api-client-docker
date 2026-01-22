@@ -34,7 +34,13 @@
 <p-table [value]="metrics()">
   <ng-template #header>
     <tr>
-      <th>Metric</th>
+      <th pSortableColumn="name">
+        <div class="flex items-center gap-2">
+          Metric
+          <p-columnFilter [showMenu]="false" matchMode="contains" type="text" field="name" filterOn="input" placeholder="Search" />
+          <p-sortIcon field="name" />
+        </div>
+      </th>
       <th>Value</th>
     </tr>
   </ng-template>
@@ -50,7 +56,11 @@
 <p-table [value]="settings()">
   <ng-template #header>
     <tr>
-      <th>Setting</th>
+      <th class="flex items-center gap-2" pSortableColumn="name">
+        Setting
+        <p-columnFilter [showMenu]="false" matchMode="contains" type="text" field="name" filterOn="input" placeholder="Search" />
+        <p-sortIcon field="name" />
+      </th>
       <th>Value</th>
     </tr>
   </ng-template>

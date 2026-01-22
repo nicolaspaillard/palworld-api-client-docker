@@ -1,3 +1,6 @@
 {
-  "prettier.configPath": ".vscode/.prettierrc"
+  "prettier.configPath": ".vscode/.prettierrc",
+  "files.associations": {
+    "*.json": "jsonc"
+  }
 }

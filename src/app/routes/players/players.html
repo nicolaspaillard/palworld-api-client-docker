@@ -5,13 +5,30 @@
 <p-table [(contextMenuSelection)]="player" [value]="players()" [contextMenu]="cm">
   <ng-template #header>
     <tr>
-      <th>Account Name</th>
+      <!-- <th class="flex items-center gap-2" pSortableColumn="name">
+        Metric
+        <p-columnFilter [showMenu]="false" matchMode="contains" type="text" field="name" filterOn="input" placeholder="Search" />
+        <p-sortIcon field="name" />
+      </th> -->
+      <th pSortableColumn="name">
+        <div class="flex items-center gap-2">
+          Name
+          <p-columnFilter class="w-auto" [showMenu]="false" matchMode="contains" type="text" field="name" filterOn="input" placeholder="Search" />
+          <p-sortIcon field="name" />
+        </div>
+      </th>
+      <th pSortableColumn="accountName">
+        <div class="flex items-center gap-2">
+          Account Name
+          <p-columnFilter [showMenu]="false" matchMode="contains" type="text" field="accountName" filterOn="input" placeholder="Search" />
+          <p-sortIcon field="accountName" />
+        </div>
+      </th>
       <th>Building Count</th>
       <th>IP</th>
       <th>Level</th>
       <th>Location x</th>
       <th>Location y</th>
-      <th>Name</th>
       <th>Ping</th>
       <th>Player Id</th>
       <th>User Id</th>
@@ -19,13 +36,13 @@
   </ng-template>
   <ng-template #body let-player>
     <tr [pContextMenuRow]="player">
+      <td>{{ player.name }}</td>
       <td>{{ player.accountName }}</td>
       <td>{{ player.building_count }}</td>
       <td>{{ player.ip }}</td>
       <td>{{ player.level }}</td>
       <td>{{ player.location_x }}</td>
       <td>{{ player.location_y }}</td>
-      <td>{{ player.name }}</td>
       <td>{{ player.ping }}</td>
       <td>{{ player.playerId }}</td>
       <td>{{ player.userId }}</td>
