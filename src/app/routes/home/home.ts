@@ -1,5 +1,4 @@
 import { Component, OnDestroy, signal, WritableSignal } from '@angular/core';
-import { Infos } from '@classes/infos';
 import { provideIcons } from '@ng-icons/core';
 import { ServerService } from '@services/server.service';
 import { ToastService } from '@services/toast.service';
@@ -9,8 +8,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 
-class Setting {
+class Data {
   name: string;
+  type: string;
   value: string;
 }
 
@@ -22,18 +22,20 @@ class Setting {
   styles: ``,
 })
 export class Home implements OnDestroy {
-  infos: WritableSignal<Infos[]> = signal([]);
+  infos: WritableSignal<Object[]> = signal([]);
+  infosColumns: WritableSignal<string[]> = signal([]);
   interval: number;
-  metrics: WritableSignal<Setting[]> = signal([]);
-  settings: WritableSignal<Setting[]> = signal([]);
+  metrics: WritableSignal<Object[]> = signal([]);
+  metricsColumns: WritableSignal<string[]> = signal([]);
+  settings: WritableSignal<Data[]> = signal([]);
   constructor(
     private toastService: ToastService,
     private serverService: ServerService,
   ) {
     this.serverService.infos.subscribe(infos => this.infos.set([infos]));
     this.serverService.settings.subscribe(settings => {
-      let set: { name: string; value: string }[] = [];
-      for (const [key, value] of Object.entries(settings)) set.push({ name: key, value: value });
+      let set: Data[] = [];
+      for (const [key, value] of Object.entries(settings)) set.push({ name: key, type: typeof value, value: value });
       this.settings.set(set);
     });
     this.get();
@@ -44,13 +46,15 @@ export class Home implements OnDestroy {
       next: res => this.toastService.success('Success', 'The server force stopped.'),
       error: err => this.toastService.error('Error', err),
     });
-
   get = () =>
     this.serverService.get().subscribe(metrics => {
-      console.log(metrics);
-      let set: { name: string; value: string }[] = [];
-      for (const [key, value] of Object.entries(metrics)) set.push({ name: key, value: value });
-      this.metrics.set(set);
+      let set: Data[] = [];
+      this.metrics.set([]);
+      this.metricsColumns.set([]);
+      for (const [key, value] of Object.entries(metrics)) {
+        this.metricsColumns.set([...this.metricsColumns(), key]);
+        this.metrics.set([metrics]);
+      }
     });
   ngOnDestroy() {
     if (this.interval) clearInterval(this.interval);

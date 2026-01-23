@@ -1,5 +1,5 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, signal, WritableSignal } from '@angular/core';
-import { Player } from '@classes/player';
 import { PlayerService } from '@services/player.service';
 import { ToastService } from '@services/toast.service';
 import { MenuItem } from 'primeng/api';
@@ -11,22 +11,23 @@ import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-player-list',
-  imports: [TableModule, ContextMenuModule, InputGroupModule, InputTextModule, ButtonModule],
+  imports: [TableModule, ContextMenuModule, InputGroupModule, InputTextModule, ButtonModule, CommonModule],
   templateUrl: './players.html',
   styles: ``,
 })
 export class Players implements OnDestroy {
+  columns: WritableSignal<string[]> = signal([]);
   interval: number;
   menu: MenuItem[];
-  player?: Player;
-  players: WritableSignal<Player[]> = signal([]);
+  player?: Object;
+  players: WritableSignal<Object[]> = signal([]);
   constructor(
     private playerService: PlayerService,
     private toastService: ToastService,
   ) {
     this.menu = [
-      { label: 'Kick', icon: 'pi pi-fw pi-sign-out', command: () => this.kick(this.player!.userId) },
-      { label: 'Ban', icon: 'pi pi-fw pi-ban', command: () => this.ban(this.player!.userId) },
+      { label: 'Kick', icon: 'pi pi-fw pi-sign-out', command: () => this.kick(this.player!['userId']) },
+      { label: 'Ban', icon: 'pi pi-fw pi-ban', command: () => this.ban(this.player!['userId']) },
     ];
     this.get();
     this.interval = setInterval(() => this.get(), 5000);
@@ -39,7 +40,11 @@ export class Players implements OnDestroy {
   };
   get = () =>
     this.playerService.get().subscribe({
-      next: res => this.players.set(res),
+      next: res => {
+        this.columns.set([]);
+        if (res.length > 0) for (const [key, value] of Object.entries(res[0])) this.columns.set([...this.columns(), key]);
+        this.players.set(res);
+      },
       error: err => console.error(err),
     });
 

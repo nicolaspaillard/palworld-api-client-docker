@@ -1,29 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Infos } from '@classes/infos';
-import { Settings } from '@classes/settings';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServerService {
-  private _infos: Subject<Infos> = new ReplaySubject(1);
-  private _settings: Subject<Settings> = new ReplaySubject(1);
+  private _infos: Subject<Object> = new ReplaySubject(1);
+  private _settings: Subject<Object> = new ReplaySubject(1);
   constructor(private http: HttpClient) {
     this.http.get('/api/info').subscribe({
-      next: infos => this._infos.next(infos as Infos),
+      next: infos => this._infos.next(infos),
       error: err => console.error(err),
     });
     this.http.get('/api/settings').subscribe({
-      next: settings => this._settings.next(settings as Settings),
+      next: settings => this._settings.next(settings),
       error: err => console.error(err),
     });
   }
-  public get infos(): Observable<Infos> {
+  public get infos(): Observable<Object> {
     return this._infos.asObservable();
   }
-  public get settings(): Observable<Settings> {
+  public get settings(): Observable<Object> {
     return this._settings.asObservable();
   }
   announce = (message: string) => this.http.post('/api/announce', { message: message });
