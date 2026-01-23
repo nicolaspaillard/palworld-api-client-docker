@@ -27,7 +27,7 @@ FROM nginxinc/nginx-unprivileged:${NGINX_VERSION} AS runner
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 
-COPY start.sh /
+COPY --chmod=777 start.sh /
 
 COPY --chown=nginx:nginx --from=builder /app/dist/*/browser /usr/share/nginx/html
 
